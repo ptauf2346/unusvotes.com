@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 2px black solid;
+            font: 12px sans-serif;
+            width: 60%;
+            min-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            border: 1px black solid;
+            padding: 5px;
+        }
+
+        .grid-container-1 {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            padding-left: 200px;
+            padding-right:200px;
+            }
+        .grid-container-2 {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding-left: 200px;
+            padding-right: 200px;
+            }
+        .grid-item {
+        }
+
+        .h2 {
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+    <h2>UN General Assembly Palestinian Resolutions</h2>
+    <p>There have been 762 UN General Assembly Resolutions that have passed with a vote and with that vote recorded and uploaded online by the UN. Below
+        is the breakdown of the voting record. On the left is the average distribution of votes per resolution. On the right is a bar graph 
+        where every bar represents a resolution and the size of the different colors represents the # of votes for yes/no/abstain/non-voting.
+    </p>
+    <div class="grid-container-1">
+        <div class="grid-item"></div>
+        <div class="grid-item">    <img src="./images/average-vote-percentage.png" style="width:300px; margin-top: 100px;">        </div>
+        <div class="grid-item">    <img src="./images/percent-vote-overtime.png" style="width:600px;">        </div>  
+        <div class="grid-item"></div> 
+     </div>
+     <br><br>
+    <div class="grid-container-2">
+        <div class="grid-item">    <img src="./images/us-voting-summary-circle.png" style="width:250px;">        </div>
+        <div class="grid-item">    <img src="./images/us-voting-per-decade.png" style="width:300px;">        </div>
+        <div class="grid-item">    <img src="./images/us-voting-per-decade-norm.png" style="width:300px;">        </div> 
+    </div>
+
+    <script type="text/javascript"charset="utf-8">
+        d3.text("/unga-palestine-resolutions-voting-record.csv", function(data) {
+            var parsedCSV = d3.csv.parseRows(data);
+
+            var container = d3.select("body")
+                .append("table")
+
+                .selectAll("tr")
+                    .data(parsedCSV).enter()
+                    .append("tr")
+
+                .selectAll("td")
+                    .data(function(d) { return d; }).enter()
+                    .append("td")
+                    .text(function(d) { return d; });
+        });
+    </script>
+
+
+</body>
+</html>
